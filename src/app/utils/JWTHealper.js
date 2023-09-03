@@ -6,7 +6,7 @@ export async function createToken(email) {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setIssuer(process.env.JWT_ISSUER)
-    .setExpirationTime(process.env.JWT_EXPAIRATION)
+    .setExpirationTime("2h")
     .sign(secrat);
   return token;
 }
