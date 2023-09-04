@@ -14,11 +14,16 @@ export async function POST(req, res) {
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setIssuer(process.env.JWT_ISSUER)
-      .setExpirationTime("2h")
+      .setExpirationTime(process.env.JWT_EXPAIRATION)
       .sign(key);
     return NextResponse.json(
       { status: "Success", massage: "Login Success", token: token },
-      { status: 200 }
+      {
+        status: 200,
+        headers: {
+          "Set-Cookie": `token=${token}; path=/; httpOnly`,
+        },
+      }
     );
   } else {
     return NextResponse.json(
